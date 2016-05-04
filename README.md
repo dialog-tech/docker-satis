@@ -1,11 +1,5 @@
 # Docker Satis
 
-[![Build Status](https://travis-ci.org/ypereirareis/docker-satis.svg?branch=master)](https://travis-ci.org/ypereirareis/docker-satis)
-[![Docker Stars](https://img.shields.io/docker/stars/ypereirareis/docker-satis.svg)]()
-[![ImageLayers Size](https://img.shields.io/imagelayers/image-size/ypereirareis/docker-satis/latest.svg)]()
-[![Docker Pulls](https://img.shields.io/docker/pulls/ypereirareis/docker-satis.svg)]()
-[![ImageLayers Layers](https://img.shields.io/imagelayers/layers/ypereirareis/docker-satis/latest.svg)]()
-
 A docker image and configuration to run [Satis](https://github.com/composer/satis) very easily in seconds:
 
 * Automatically (cron every minute)
@@ -186,10 +180,9 @@ server {
 
 This section will assume you have a Kubernetes cluster running, and have kubectl installed. There are two key steps to deploy to your Kubernetes cluster, first you need to store the required ssh-key as a secret, and your config.json as a configMap
 
-* Load the ssh key for private satis repos (this should be a deploy only github key, not your personal key). It is required that the key is named id (not id_rsa) when added via secret
+* Load the ssh key for private satis repos (this should be a deploy only github key, not your personal key).
 ```
-cp [path_to_key] ./id
-kubectl create secret generic github-ssh --from-file=ssh-privatekey=/path/to/id
+kubectl create secret generic github-ssh --from-file=id=/path/to/keyfile
 ```
 
 * Load the config file for sate using configMap
