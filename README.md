@@ -182,6 +182,26 @@ server {
 }
 ```
 
+## KUBERNETES
+
+This section will assume you have a Kubernetes cluster running, and have kubectl installed. There are two key steps to deploy to your Kubernetes cluster, first you need to store the required ssh-key as a secret, and your config.json as a configMap
+
+* Load the ssh key for private satis repos (this should be a deploy only github key, not your personal key). It is required that the key is named id (not id_rsa) when added via secret
+```
+cp [path_to_key] ./id
+kubectl create secret generic github-ssh --from-file=ssh-privatekey=/path/to/id
+```
+
+* Load the config file for sate using configMap
+```
+kubectl create configmap satis-config --from-file=/path/to/production/config.json
+```
+
+* Deploy the application
+```
+kubectl create -f ./kube-satis.yaml
+```
+
 ## Tests
 
 ```shell
