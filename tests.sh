@@ -8,7 +8,7 @@ function build() {
 }
 
 function run() {
-  docker run --rm "${IMAGE_NAME}:${VERSION}" bash -c "cat /app/config.json && ./scripts/build.sh"
+  docker run --rm "${IMAGE_NAME}:${VERSION}" bash -c "cat /satis-config/config.json && ./scripts/build.sh"
 }
 
 function test_all() {

@@ -84,7 +84,7 @@ satis:
     image: ypereirareis/docker-satis:4.2
     volumes:
         - ./config.php:/app/config.php
-        - ./config.json:/app/config.json
+        - ./config.json:/satis-config/config.json
 ```
 
 But I advise you to create your own image and Dockerfile:
@@ -93,7 +93,7 @@ But I advise you to create your own image and Dockerfile:
 FROM ypereirareis/docker-satis:4.2
 ...
 ADD config.php /app/config.php
-ADD config.json /app/config.json
+ADD config.json /satis-config/config.json
 ```
 
 ## **Build frequency**

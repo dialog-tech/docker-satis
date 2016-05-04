@@ -52,13 +52,13 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 ADD scripts /app/scripts
 
 ADD scripts/crontab /etc/cron.d/satis-cron
-ADD config.json /app/config.json
+ADD config.json /satis-config/config.json
 ADD server.js /app/server.js
 ADD config.php /satisfy/app/config.php
 
 RUN chmod 0644 /etc/cron.d/satis-cron \
 	&& touch /var/log/satis-cron.log \
-	&& chmod 777 /app/config.json \
+	&& chmod 777 /satis-config/config.json \
 	&& chmod 777 /app/server.js \
 	&& chmod +x /app/scripts/startup.sh
 
