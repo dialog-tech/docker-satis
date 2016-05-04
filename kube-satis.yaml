@@ -1,0 +1,68 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-satis
+  labels:
+    app: satis
+    tier: frontend
+spec:
+  type: LoadBalancer
+  ports:
+  - name: build
+    port: 3000
+    protocol: TCP
+  - name: http
+    port: 80
+    protocol: TCP
+  selector:
+    app: satis
+    tier: frontend
+---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: frontend-satis
+  labels:
+    app: satis
+    tier: frontend
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: satis
+        tier: frontend
+    spec:
+      volumes:
+      - name: secret-volume
+        secret:
+          secretName: github-ssh
+      - name: config-volume
+        configMap:
+          name: satis-config
+      containers:
+      - name: satis
+        image: dialogtech/satis:latest
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        env:
+        - name: GET_HOSTS_FROM
+          value: dns
+        - name: PRIVATE_REPO_DOMAIN_LIST
+          value: github.com
+        ports:
+        - containerPort: 80
+          name: http
+          protocol: TCP
+        - containerPort: 3000
+          name: build
+          protocol: TCP
+        volumeMounts:
+        - name: secret-volume
+          mountPath: /var/tmp
+          readOnly: true
+        - name: config-volume
+          mountPath: /satis-config

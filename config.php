@@ -3,7 +3,7 @@
 /**
  * Satis configuration file
  */
-$app['satis.filename'] = '/app/config.json';
+$app['satis.filename'] = '/satis-config/config.json';
 
 /**
  * Satis auditlog (cheap backup/versioning) path
